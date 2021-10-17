@@ -22,6 +22,8 @@ export default class Document {
         })
         .map(word => word.toLowerCase());
       this._termFrequencies = null;
+    } else {
+      this._words = [""]
     }
   }
   // Internal method to count how often each term appears in this document
