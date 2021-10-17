@@ -7,21 +7,23 @@ export default class Document {
   // Expects a single one of the texts originally passed into Corpus
   constructor(text) {
     this._text = text;
-    this._words = text
-      .match(/[a-zA-ZÀ-ÖØ-öø-ÿ]+/g)
-      .filter(word => {
-        // Exclude very short terms and terms that start with a number
-        // (stopwords are dealt with by the Corpus class)
-        if (word.length < 2 || word.match(/^\d/)) {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .map(word => word.toLowerCase());
-    this._termFrequencies = null;
+    const doesMatch = text.match(/[a-zA-ZÀ-ÖØ-öø-ÿ]+/g);
+    if(doesMatch){ //avoids null error when the text is only numbers i.e. when text = 1500
+      this._words = text
+        .match(/[a-zA-ZÀ-ÖØ-öø-ÿ]+/g)
+        .filter(word => {
+          // Exclude very short terms and terms that start with a number
+          // (stopwords are dealt with by the Corpus class)
+          if (word.length < 2 || word.match(/^\d/)) {
+            return false;
+          } else {
+            return true;
+          }
+        })
+        .map(word => word.toLowerCase());
+      this._termFrequencies = null;
+    }
   }
-
   // Internal method to count how often each term appears in this document
   _calculateTermFrequencies() {
     this._termFrequencies = new Map();
