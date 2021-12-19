@@ -29,6 +29,10 @@ export default class Document {
   // Internal method to count how often each term appears in this document
   _calculateTermFrequencies() {
     this._termFrequencies = new Map();
+    if(!this._words){ //if title is all numbers
+      this._termFrequencies.set(this._text, 1);
+      return;
+    }
     this._words.forEach(word => {
       if (this._termFrequencies.has(word)) {
         this._termFrequencies.set(word, this._termFrequencies.get(word) + 1);
